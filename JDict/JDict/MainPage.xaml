@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="JDict.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JDict"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <Page.Resources>
+        <ItemsPanelTemplate x:Key="StoreFrontGridItemsPanelTemplate">
+            <ItemsWrapGrid/>
+        </ItemsPanelTemplate>
+
+        <Style x:Key="StoreFrontTileStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Height" Value="240"/>
+            <Setter Property="Width" Value="292"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+        </Style>
+        <DataTemplate x:Key="EntryTemplate">
+            <local:EntryItem/>
+        </DataTemplate>
+        <Style x:Key="BaseStatusStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Semilight"/>
+            <Setter Property="FontSize" Value="14.667"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style x:Key="StatusStyle" BasedOn="{StaticResource BaseStatusStyle}" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Green"/>
+        </Style>
+        <Style x:Key="ErrorStyle" BasedOn="{StaticResource BaseStatusStyle}" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <SearchBox Grid.Row="0" x:Name="TextSearch" Margin="0,0,0,0" VerticalAlignment="Top" PlaceholderText="Search..."
+                   FontSize="28" SuggestionsRequested="TextSearch_SuggestionsRequested" QuerySubmitted="TextSearch_QuerySubmitted" />
+        <TextBlock x:Name="StatusBlock" Grid.Row="1" Margin="0,0,0,5" Visibility="Collapsed"></TextBlock>
+        <GridView x:Name="ResultsGrid" Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Top" 
+                  ItemTemplate="{StaticResource EntryTemplate}" 
+                  ItemContainerStyle="{StaticResource StoreFrontTileStyle}"
+                  ItemsPanel="{StaticResource StoreFrontGridItemsPanelTemplate}"
+                  ShowsScrollingPlaceholders="False"
+                  ContainerContentChanging="ResultsGrid_ContainerContentChanging"  />
+    </Grid>
+</Page>
